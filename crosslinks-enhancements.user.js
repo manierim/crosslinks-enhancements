@@ -30,6 +30,8 @@ function wrapper() {
 
         $plugin.crossLinks.init();
 
+        $plugin.ui.init();
+
     }
 
     var setup = function () {
@@ -44,10 +46,12 @@ function wrapper() {
     }
 
     //-------------------------------------------------------------
-    // Enhancements
+    // Filtering
     //-------------------------------------------------------------
 
+    $plugin.selectedColors = [];
     $plugin.drawcolors = [];
+
     $plugin.polygons = [];
 
     $plugin.ShouldCheckDrawnItem = function (drawItem, closed) {
@@ -71,7 +75,7 @@ function wrapper() {
             }
         }
 
-        if (drawItem.options.color == '#c0c0c0') {
+        if ($plugin.selectedColors.indexOf(drawItem.options.color) === -1) {
             return false;
         }
         return true;
@@ -150,7 +154,67 @@ function wrapper() {
 
     }
 
+    //-------------------------------------------------------------
+    // UI
+    //-------------------------------------------------------------
 
+    $plugin.ui = {};
+
+    $plugin.ui.init = function () {
+        $('#toolbox').append('<a onclick="window.plugin.crossLinksEnhancements.ui.showOptions();return false;">Cross Links Enhancements</a>');
+    }
+
+    $plugin.ui.setOptions = function () {
+
+        $plugin.selectedColors = [];
+
+        $("#dialog-crossLinksEnhancementsOptions input[type=checkbox][name=crossLinkColors]").each(function (i, input) {
+            if (input.checked) {
+                $plugin.selectedColors.push(input.value);
+            }
+
+        })
+    }
+
+    $plugin.ui.showOptions = function () {
+        var html = []
+        html.push('<div class="crossLinksEnhancementsStyles">');
+
+        html.push('<fieldset>');
+        html.push('<legend>Draw items colors:</legend>');
+
+        if ($plugin.drawcolors.length) {
+            $plugin.drawcolors.forEach(function (color) {
+                var domId = "crossLinkColors_" + color;
+                var handler = "return window.plugin.crossLinksEnhancements.ui.clickColor('" + color + "');"
+                html.push('<input ');
+                html.push('type="checkbox" ');
+                html.push('name="crossLinkColors" ');
+                html.push('id="' + domId + '"');
+                if ($plugin.selectedColors.indexOf(color) !== -1) {
+                    html.push('checked ');
+                }
+                html.push('value="' + color + '">');
+                html.push('<label for="' + domId + '"><span style="color: ' + color + ';">█</span></label>');
+                html.push('&nbsp;&nbsp;&nbsp;&nbsp;');
+            })
+        }
+        else {
+            html.push('<em>Load a draw or wait first map update!</em>');
+        }
+
+        html.push('</fieldset>');
+
+        html.push('</div>');
+
+        dialog({
+            html: html.join(''),
+            title: 'Cross Links Options',
+            id: 'crossLinksEnhancementsOptions',
+            closeCallback: function () {window.plugin.crossLinksEnhancements.ui.setOptions(); }
+        });
+
+    }
 
     // PLUGIN END //////////////////////////////////////////////////////////
 
