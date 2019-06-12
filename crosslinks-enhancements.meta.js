@@ -3,7 +3,7 @@
 // @name           Crosslinks Enhancements
 // @description    Adds options to limit cross links detection by drawn items color and to cross links inside a polygon
 // @category       Misc
-// @version        1.0
+// @version        1.1
 // @author         MarcioPG
 // @website        https://github.com/manierim/crosslinks-enhancements
 // @updateURL      https://github.com/manierim/crosslinks-enhancements/raw/master/crosslinks-enhancements.meta.js

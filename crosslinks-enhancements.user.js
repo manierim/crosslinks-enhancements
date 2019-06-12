@@ -3,7 +3,7 @@
 // @name           Crosslinks Enhancements
 // @description    Adds options to limit cross links detection by drawn items color and to cross links inside a polygon
 // @category       Misc
-// @version        1.0
+// @version        1.1
 // @author         MarcioPG
 // @website        https://github.com/manierim/crosslinks-enhancements
 // @updateURL      https://github.com/manierim/crosslinks-enhancements/raw/master/crosslinks-enhancements.meta.js
@@ -17,8 +17,6 @@
 // @require        https://cdn.rawgit.com/hayeswise/Leaflet.PointInPolygon/v1.0.0/wise-leaflet-pip.js
 // ==/UserScript==
 
-// MarcioPG WRAPPER v1.0 START /////////////////////////////////////////////
-
 function wrapper() {
 
     // ensure plugin framework is there, even if iitc is not yet loaded
@@ -30,39 +28,22 @@ function wrapper() {
     var $plugin = window.plugin.crossLinksEnhancements;
 
     //-------------------------------------------------------------
-    // Init & Setup
+    // Setup
     //-------------------------------------------------------------
 
-    $plugin.initDone = false;
-    $plugin.init = function () {
-
-        if ($plugin.initDone) {
-            return;
-        }
-        $plugin.initDone = true;
+    var setup = function () {
 
         if (window.plugin.crossLinks === undefined) {
             console.warn('crossLinks Enhancements: crossLinks plugin not found');
             return;
         }
 
-        $plugin.opts.init();
-        $plugin.crossLinks.init();
-        $plugin.ui.init();
-        $plugin.draw.init();
+        window.plugin.crossLinksEnhancements.ui.init();
+        window.plugin.crossLinksEnhancements.opts.init();
+        window.plugin.crossLinksEnhancements.crossLinks.init();
+        window.plugin.crossLinksEnhancements.draw.init();
 
-    }
-
-    var setup = function () {
-
-        if (window.iitcLoaded) {
-            $plugin.init();
-        }
-        else {
-            window.addHook('iitcLoaded', $plugin.init);
-        }
-
-    }
+    };
 
     //-------------------------------------------------------------
     // Storage 
@@ -622,7 +603,6 @@ function wrapper() {
     }
 
     // PLUGIN END //////////////////////////////////////////////////////////
-
 
     if (!window.bootPlugins) window.bootPlugins = [];
     window.bootPlugins.push(setup);

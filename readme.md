@@ -54,5 +54,7 @@ Point in Polygon function by [hayeswise/Leaflet.PointInPolygon](https://github.c
 
 ## Changelog
 
+- 2019-06-13 (version 1.1)
+  + Major bugfix in setup logic!
 - 2019-06-11 (version 1.0)
   + Initial Release
