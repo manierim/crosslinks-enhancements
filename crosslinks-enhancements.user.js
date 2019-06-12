@@ -33,17 +33,28 @@ function wrapper() {
 
     var setup = function () {
 
+        window.addHook('iitcLoaded', $plugin.init);
+        $plugin.ui.init();
+
+    }
+
+    //-------------------------------------------------------------
+    // Init 
+    //-------------------------------------------------------------
+
+    $plugin.init = function () {
+
         if (window.plugin.crossLinks === undefined) {
             console.warn('crossLinks Enhancements: crossLinks plugin not found');
+            $plugin.ui.remove();
             return;
         }
 
-        window.plugin.crossLinksEnhancements.ui.init();
-        window.plugin.crossLinksEnhancements.opts.init();
-        window.plugin.crossLinksEnhancements.crossLinks.init();
-        window.plugin.crossLinksEnhancements.draw.init();
+        $plugin.opts.init();
+        $plugin.crossLinks.init();
+        $plugin.draw.init();
 
-    };
+    }
 
     //-------------------------------------------------------------
     // Storage 
@@ -386,10 +397,14 @@ function wrapper() {
 
         $('#toolbox')
             .append(
-                '<a onclick="window.plugin.crossLinksEnhancements.ui.showOptions(); return false;">'
+                '<a id="crossLinksEnhancementsToolBoxLink" onclick="window.plugin.crossLinksEnhancements.ui.showOptions(); return false;">'
                 + 'Cross Links Opts'
                 + '</a>'
             );
+    }
+
+    $plugin.ui.remove = function () {
+        $('#crossLinksEnhancementsToolBoxLink').remove();
     }
 
     $plugin.ui.setOptions = function () {
