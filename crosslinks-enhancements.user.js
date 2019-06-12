@@ -590,9 +590,6 @@ function wrapper() {
             html.push('</fieldset>');
         }
 
-
-
-
         html.push('</div>');
         dialog({
             html: html.join(''),
