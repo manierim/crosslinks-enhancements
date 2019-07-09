@@ -262,7 +262,7 @@ function wrapper() {
 
     }
 
-    $plugin.filters.colors.shouldCheckDrawnItem = function (drawItem, closed) {
+    $plugin.filters.colors.shouldCheckDrawnItem = function (drawItem) {
 
         // drawn item color filter
         if (
@@ -369,7 +369,7 @@ function wrapper() {
     // Main override for drawn item against link
     $plugin.crossLinks.testPolyLine = function (drawItem, link, closed) {
 
-        if (!$plugin.filters.colors.shouldCheckDrawnItem(drawItem, closed)) {
+        if (!$plugin.filters.colors.shouldCheckDrawnItem(drawItem)) {
             return false;
         }
         if (!$plugin.filters.polygon.ShouldCheckLink(link)) {
